@@ -1,6 +1,6 @@
 from . import *
 
-@bot.on(hell_cmd(pattern="spic"))
+@bot.on(admin_cmd(pattern="spic"))
 async def oho(event):
   if not event.is_reply:
     return await event.edit('Reply to a self distructing pic !.!.!')

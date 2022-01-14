@@ -19,28 +19,31 @@ lg_id = Config.LOGGER_ID
 
 
 
-@bot.on(admin_cmd("cspam (.*)"))
-@bot.on(sudo_cmd(pattern="cspam (.*)", allow_sudo=True))
-async def tmeme(event):
-    "Spam the text letter by letter."
-    cspam = str("".join(event.text.split(maxsplit=1)[1:]))
-    message = cspam.replace(" ", "")
+
+
+@bot.on(admin_cmd("wspam (.*)"))
+@bot.on(sudo_cmd(pattern="wspam (.*)", allow_sudo=True))
+async def spam(event):
+    wspam = str("".join(event.text.split(maxsplit=1)[1:]))
+    message = wspam.split()
     await event.delete()
-    for letter in message:
-        await event.respond(letter)
-    if Config.LOGGER:
+    for word in message:
+        await event.respond(word)
+    if lg_id:
         if event.is_private:
             await event.client.send_message(
                 lg_id,
-                "#CSPAM\n"
-                + f"Letter Spam was executed successfully in [User](tg://user?id={event.chat_id}) chat with : `{message}`",
+                "#WSPAM\n"
+                + f"Word Spam was executed successfully in [User](tg://user?id={event.chat_id}) chat with : `{message}`",
             )
         else:
             await event.client.send_message(
                 lg_id,
-                "#CSPAM\n"
-                + f"Letter Spam was executed successfully in {get_display_name(await event.get_chat())}(`{event.chat_id}`) chat with : `{message}`",
+                "#WSPAM\n"
+                + f"Word Spam was executed successfully in {legend_mention} chat with : `{message}`",
             )
+
+
 
 
 CmdHelp("spam").add_command(
